@@ -241,7 +241,7 @@
                 class="font-serif text-xl tracking-[0.2em] text-arc-light-text dark:text-arc-dark-text transition-colors duration-500 mb-8">ARC</a>
 
             <div class="flex flex-wrap justify-center gap-6 mb-8">
-                <a href="mailto:arcjournals.dev@gmail.com"
+                <a href="mailto:arcjournals.dev@gmail.com" id="supportLink"
                     class="text-sm text-arc-light-textDim dark:text-arc-dark-textDim hover:text-arc-tint transition-colors">Support</a>
                 <a href="privacy-policy.html"
                     class="text-sm text-arc-light-textDim dark:text-arc-dark-textDim hover:text-arc-tint transition-colors">Privacy</a>
@@ -317,7 +317,28 @@
 
             fadeUpElements.forEach(el => observer.observe(el));
 
-            // --- 3. DYNAMIC FOOTER YEAR ---
+            // --- 3. SMART SUPPORT LINK ---
+            const supportLink = document.getElementById('supportLink');
+            if (supportLink) {
+                supportLink.addEventListener('click', async (e) => {
+                    const email = 'arcjournals.dev@gmail.com';
+                    try {
+                        await navigator.clipboard.writeText(email);
+                        const originalText = supportLink.textContent;
+                        supportLink.textContent = 'Email Copied!';
+                        supportLink.classList.add('text-arc-tint');
+
+                        setTimeout(() => {
+                            supportLink.textContent = originalText;
+                            supportLink.classList.remove('text-arc-tint');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Copy failed', err);
+                    }
+                });
+            }
+
+            // --- 4. DYNAMIC FOOTER YEAR ---
             document.getElementById('currentYear').textContent = new Date().getFullYear();
         });
     </script>
