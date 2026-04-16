@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARC | The Sanctuary for Your Mind</title>
+    <title>ARC | Your Life Narrated</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -280,27 +280,20 @@
                 }
             }
 
-            // Initialization logic (Priority checks: Local Storage -> System Pref)
+            // Initialization logic (Priority: Local Storage -> Default to Light)
             const savedTheme = localStorage.getItem('arc-theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
             if (savedTheme) {
                 applyTheme(savedTheme === 'dark');
             } else {
-                applyTheme(systemPrefersDark);
+                // New visitors always start in Light Mode
+                applyTheme(false);
             }
 
             // Click Handler
             themeToggle.addEventListener('click', () => {
                 const isDarkNow = htmlElement.classList.contains('dark');
                 applyTheme(!isDarkNow);
-            });
-
-            // React to system changes live (if user hasn't overridden manually)
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                if (!localStorage.getItem('arc-theme')) {
-                    applyTheme(e.matches);
-                }
             });
 
             // --- 2. LUXURY FADE-UP ANIMATION MANAGER ---
